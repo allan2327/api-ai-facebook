@@ -92,7 +92,7 @@ def parse_natural_text(sender_id, user_text):
 
     # Set session id
     if sender_id not in session_ids:
-        session_ids[sender_id] = uuid.uuid4()
+        session_ids[sender_id] = str(uuid.uuid4())
 
     api_request.session_id(session_ids[sender_id])
 
