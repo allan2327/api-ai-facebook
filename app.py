@@ -113,11 +113,11 @@ def send_message(sender_id, message):
 
 # Sends messages
 def send_message_staggered(sender_id, api_response):
-    send_message(sender_id, api_response['speech'])
+    send_message(sender_id, {"text": api_response['speech']})
 
     if bool(api_response['messages']):
         for message in api_response['messages']:
-            send_message(sender_id, message)
+            send_message(sender_id, message['payload']['facebook'])
 
 
 # run server
