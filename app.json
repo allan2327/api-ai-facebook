@@ -1,0 +1,25 @@
+{
+  "name": "API.AI Facebook integration",
+  "description": "Create Facebook bots with natural language understanding based on Api.ai technology.",
+  "repository": "https://github.com/thaoha/api-ai-facebook.git",
+  "keywords": ["api.ai", "facebook", "natural language"],
+  "env": {
+    "CLIENT_ACCESS_TOKEN": {
+      "description": "Client access token for Api.ai",
+      "value": ""
+    },
+    "VERIFY_TOKEN": {
+      "description": "Verification code",
+      "value": ""
+    },
+    "PAGE_ACCESS_TOKEN": {
+      "description": "Page Access Token",
+      "value": ""
+    },
+    "APIAI_LANG": {
+      "description": "Agent language",
+      "value": "",
+      "required": false
+    }
+  }
+}
