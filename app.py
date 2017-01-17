@@ -94,7 +94,7 @@ def parse_natural_text(sender_id, user_text):
     if sender_id not in session_ids:
         session_ids[sender_id] = uuid.uuid4()
 
-    api_request.session_id(123)
+    api_request.session_id(session_ids[sender_id])
 
     # Receiving the response.
     response = json.loads(api_request.getresponse().read().decode('utf-8'))
