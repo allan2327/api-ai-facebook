@@ -56,6 +56,7 @@ def handle_verification():
 @app.route('/webhook', methods=['POST'])
 def handle_message():
     data = request.get_json()
+    print(data)
 
     if data["object"] == "page":
         # Iterating through entries and messaging events batched and sent to us by Messenger
@@ -89,7 +90,6 @@ def ai_request(sender_id, user_text):
     response_status = response['status']['code']
     if response_status == 200:
         # Sending the textual response of the bot.
-        print(response)
         return response['result']['fulfillment']
 
     else:
