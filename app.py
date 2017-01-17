@@ -16,11 +16,11 @@ except ImportError:
 app = Flask(__name__)
 
 # Client Access Token for accessing our API AI Bot
-CLIENT_ACCESS_TOKEN = 'INSERT_APIAI_CAT'
+CLIENT_ACCESS_TOKEN = os.environ['CLIENT_ACCESS_TOKEN']
 # Page Access Token for Facebook Page where the conversation can be started with the bot.
-PAGE_ACCESS_TOKEN = 'INSERT_FACEBOOK_PAT'
+PAGE_ACCESS_TOKEN = os.environ['PAGE_ACCESS_TOKEN']
 # Token created whilst configuring Webhook subscription.
-VERIFY_TOKEN = 'INSERT_TOKEN'
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 
 # An endpoint to ApiAi, an object used for making requests to a particular agent.
 ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
