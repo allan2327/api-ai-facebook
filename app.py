@@ -89,6 +89,7 @@ def ai_request(sender_id, user_text):
     response_status = response['status']['code']
     if response_status == 200:
         # Sending the textual response of the bot.
+        print(response)
         return response['result']['fulfillment']
 
     else:
@@ -117,7 +118,8 @@ def send_message_staggered(sender_id, api_response):
 
     if bool(api_response['messages']):
         for message in api_response['messages']:
-            send_message(sender_id, message['payload']['facebook'])
+            if message['type'] == 4:
+                send_message(sender_id, message['payload']['facebook'])
 
 
 # run server
