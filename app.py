@@ -61,13 +61,16 @@ def handle_message():
     if data["object"] == "page":
         # Iterating through entries and messaging events batched and sent to us by Messenger
         for entry in data["entry"]:
-            for messaging_event in entry["messaging"]:
-                if messaging_event.get("message"):  # Checking if the messaging even contains a message field.
-                    sender_id = messaging_event["sender"]["id"]  # the facebook ID of the person sending you the message
-                    recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    message_text = messaging_event["message"]["text"]  # the message's text
-                    ai_response = ai_request(sender_id, message_text)
-                    send_message_staggered(sender_id, ai_response)  # Sending a response to the user.
+            if 'messaging' in entry:
+                for messaging_event in entry["messaging"]:
+                    message = messaging_event.get("message")
+
+                    if message and not message.get('is_echo'):  # Checking if the messaging even contains a message field.
+                        sender_id = messaging_event["sender"]["id"]  # the facebook ID of the person sending you the message
+                        recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
+                        message_text = messaging_event["message"]["text"]  # the message's text
+                        ai_response = ai_request(sender_id, message_text)
+                        send_message_staggered(sender_id, ai_response)  # Sending a response to the user.
 
     return "ok"
 
