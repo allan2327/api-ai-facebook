@@ -70,7 +70,6 @@ def handle_message():
                         sender_id = messaging_event["sender"]["id"]  # the facebook user ID
                         message_text = message.get("text") if message else postback.get("payload")  # the message's text
 
-                        print(message_text)
                         ai_response = ai_request(sender_id, message_text)  # Get response from api.ai
                         send_message_staggered(sender_id, ai_response)  # Sending a response to the user.
 
