@@ -56,20 +56,21 @@ def handle_verification():
 @app.route('/webhook', methods=['POST'])
 def handle_message():
     data = request.get_json()
-    print(data)
 
     if data["object"] == "page":
         # Iterating through entries and messaging events batched and sent to us by Messenger
         for entry in data["entry"]:
-            if 'messaging' in entry:
+            if entry.get('messaging'):
                 for messaging_event in entry["messaging"]:
                     message = messaging_event.get("message")
+                    postback = messaging_event.get("postback")
 
-                    if message and not message.get('is_echo'):  # Checking if the messaging even contains a message field.
-                        sender_id = messaging_event["sender"]["id"]  # the facebook ID of the person sending you the message
-                        recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                        message_text = messaging_event["message"]["text"]  # the message's text
-                        ai_response = ai_request(sender_id, message_text)
+                    # Check valid user message.
+                    if (message and not message.get("is_echo")) or (postback and postback.get("payload")):
+                        sender_id = messaging_event["sender"]["id"]  # the facebook user ID
+                        message_text = message.get("text") if message else postback.get("payload")  # the message's text
+
+                        ai_response = ai_request(sender_id, message_text)  # Get response from api.ai
                         send_message_staggered(sender_id, ai_response)  # Sending a response to the user.
 
     return "ok"
